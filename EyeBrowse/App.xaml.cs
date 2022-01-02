@@ -32,6 +32,7 @@ namespace EyeBrowse
         {
             this.InitializeComponent();
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+            this.RequiresPointerMode = Windows.UI.Xaml.ApplicationRequiresPointerMode.WhenRequested;
             this.Suspending += OnSuspending;
         }
 
