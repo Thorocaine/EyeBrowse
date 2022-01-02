@@ -59,5 +59,6 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <rescap:Capability Name="broadFileSystemAccess" />
+    <uap:Capability Name="removableStorage"/>
   </Capabilities>
 </Package>

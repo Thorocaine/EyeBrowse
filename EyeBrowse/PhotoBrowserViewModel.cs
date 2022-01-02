@@ -12,7 +12,21 @@ using EyeBrowse.Annotations;
 
 namespace EyeBrowse
 {
-    public sealed class PhotoBrowserViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // public abstract Task InitializeAsync();
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+
+    public class PhotoBrowserViewModel : INotifyPropertyChanged
     {
         readonly CoreDispatcher _dispatcher;
         string _currentPath = string.Empty;
@@ -83,6 +97,7 @@ namespace EyeBrowse
             _next.Clear();
 
             var dir = await file.GetParentAsync();
+            if (dir == null) return; //TODO: Something
             var files = (await dir.GetFilesAsync())
                 .Where(f => f.FileType == ".jpeg" || f.FileType == ".jpg" || f.FileType == ".png")
                 .OrderBy(f => f.Name)
