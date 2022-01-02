@@ -16,6 +16,8 @@ using VirtualKey = Windows.System.VirtualKey;
 
 namespace EyeBrowse
 {
+    public enum Direction { Up, Down, Left, Right }
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -82,8 +84,13 @@ namespace EyeBrowse
 
         async void CoreWindow_KeyUp(CoreWindow sender, KeyEventArgs e)
         {
+            if (!(Parent is Frame frame)) return;
             switch (e.VirtualKey)
             {
+                case VirtualKey.Escape when Parent is Frame f && f.CanGoBack:
+                    f.GoBack();
+                    break;
+                    
                 case VirtualKey.Escape:
                     Application.Current.Exit();
                     break;
@@ -134,7 +141,7 @@ namespace EyeBrowse
             }
         }
 
-        enum Direction { Up, Down, Left, Right }
+        
         
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {

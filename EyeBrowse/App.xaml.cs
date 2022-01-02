@@ -79,10 +79,17 @@ namespace EyeBrowse
             {
                 if (rootFrame.Content == null)
                 {
+                    var folder = (new Windows.Storage.Pickers.FolderPicker
+                        {
+                            ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                            SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary
+                        })
+                        .PickSingleFolderAsync();
+
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(DirectoryBrowser), e.Arguments);
+                    rootFrame.Navigate(typeof(DirectoryBrowser), folder);
                 }
 
                 // Ensure the current window is active
